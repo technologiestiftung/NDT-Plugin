@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  *{
+    font-family: Helvetica, Arial, sans-serif;
+  }
+
+  path{
+    fill:#000;
+  }
+
+  .speedLabel{
+    font-size:40px;
+  }
+
+  .speed_type{
+    font-size:14px;
+    font-weight:bold;
+  }
+
+  path.bg{
+    stroke:rgba(0,0,0,0.5);
+    fill:#fff;
+  }
+</style>
+<body>
+  <div id="container"></div>
+  By clicking the "Start Test" button you initiate a communicate with an external server. For evaluation purposes the external server logs information about the exchange. By clicking the button you agree to that process.
+  <button id="start">Start Test</button>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript" src="../lib/min/NDTPlugin-min.js"></script>
+<script>
+
+/*
+  You should not automatically start the test, as the remote server also tracks the test data and thereby gathers "personal" information
+*/
+
+var ndt, interval;
+
+d3.select('#start').on('click', function(){
+  ndt = new NDTPlugin('../lib/min');
+
+  if(ndt.check()){
+    ndt.getServer(
+      function(success){
+        ndt.setServer(success);
+        ndt.run();
+        interval = setInterval(reportStatus, 1000);
+      },
+      function(error){
+        console.log('error', error);
+      }
+    );
+  }else{
+    console.log('sorry your browser does not support this')
+  }
+});
+
+var svg = d3.select('#container').append('svg').attr('height',350).attr('width',650);
+
+var donut = d3.arc()
+  .innerRadius(100)
+  .outerRadius(125);
+
+var speedLimit_down = 30;
+var speedLimit_up = 6;
+
+var speedScale_down = d3.scaleLinear().range([0,Math.PI*2]).domain([0,speedLimit_down]);
+var speedScale_up = d3.scaleLinear().range([0,Math.PI*2]).domain([0,speedLimit_up]);
+
+var down = svg.append('g').attr('transform','translate(150,150)');
+var down_label = down.append('text').attr('dy',20).attr('text-anchor','middle').attr('class','speedLabel');
+    down.append('text').text('Download Speed').attr('text-anchor','middle').attr('dy',40).attr('class','speed_type');
+    down.append('path').attr('class','bg').attr('d', donut({startAngle:0, endAngle:Math.PI*2}));
+var download = down.append('path').datum({newEndAngle:0,newStartAngle:0,startAngle:0,endAngle:0}).attr('d', donut);
+
+var up = svg.append('g').attr('transform','translate(500,150)');
+var up_label = up.append('text').attr('dy',20).attr('text-anchor','middle').attr('class','speedLabel');
+  up.append('text').text('Upload Speed').attr('text-anchor','middle').attr('dy',40).attr('class','speed_type');
+  up.append('path').attr('class','bg').attr('d', donut({startAngle:0, endAngle:Math.PI*2}));
+var upload = up.append('path').datum({newEndAngle:0,newStartAngle:0,startAngle:0,endAngle:0}).attr('d', donut);
+
+function reportStatus(){
+  var status = ndt.getStatus();
+
+  up_label.text(cleanSpeed(status.up, speedLimit_up).toFixed(2));
+
+  upload.datum(function(d){
+    d.newStartAngle = 0;
+    d.newEndAngle = speedScale_up(cleanSpeed(status.up, speedLimit_up));
+    return d;
+  }).transition().duration(100).attrTween("d", arcTween());
+
+  down_label.text(cleanSpeed(status.down, speedLimit_down).toFixed(2));
+
+  download.datum(function(d){
+    d.newStartAngle = 0;
+    d.newEndAngle = speedScale_down(cleanSpeed(status.down, speedLimit_down));
+    return d;
+  }).transition().duration(100).attrTween("d", arcTween());
+  
+  if(status.error.match(/completed/)){
+    clearInterval(interval);
+  }
+}
+
+function cleanSpeed(s,limit){
+  s = parseFloat(s);
+  if(isNaN(s)){s = 0;}
+  if(s<0){s = 0;}
+  if(s>limit){s = limit;}
+  return s;
+}
+
+//http://bl.ocks.org/mbostock/5100636
+function arcTween() {
+  return function(d) {
+    var interpolateStart = d3.interpolate(d.startAngle, d.newStartAngle);
+    var interpolateEnd = d3.interpolate(d.endAngle, d.newEndAngle);
+    return function(t) {
+      d.endAngle = interpolateEnd(t);
+      d.startAngle = interpolateStart(t);
+      return donut(d);
+    };
+  };
+}
+
+</script>
+</body>
+</html>

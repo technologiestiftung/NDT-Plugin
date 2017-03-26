@@ -3,6 +3,13 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title></title>
+    <style>
+      *{
+        font-family: Helvetica, Arial, sans-serif;
+        text-align: left;
+        font-size:10px;
+      }
+    </style>
     <script type="text/javascript" src="../lib/min/NDTPlugin-min.js"></script>
 </head>
 <body>
@@ -16,25 +23,35 @@
     <tr><th>Limit</th><td id="limit"></td></tr>
     <tr><th>Loss</th><td id="loss"></td></tr>
   </table>
+  By clicking the "Start Test" button you initiate a communicate with an external server. For evaluation purposes the external server logs information about the exchange. By clicking the button you agree to that process.
+  <button id="start">Start Test</button>
   <script type="text/javascript">
 
-    var ndt = new NDTPlugin('../lib/min');
+    /*
+      You should not automatically start the test, as the remote server also tracks the test data and thereby gathers "personal" information
+    */
 
-    var interval;
+    var ndt, interval;
 
-    if(ndt.check()){
-      ndt.getServer(
-        function(success){
-          ndt.setServer(success);
-          ndt.run();
-          interval = setInterval(reportStatus, 1000);
-        },
-        function(error){
-          console.log('error', error);
-        }
-      );
-    }else{
-      console.log('sorry your browser does not support this')
+    document.getElementById("start").onclick = function () {
+
+      ndt = new NDTPlugin('../lib/min');
+
+      if(ndt.check()){
+        ndt.getServer(
+          function(success){
+            ndt.setServer(success);
+            ndt.run();
+            interval = setInterval(reportStatus, 1000);
+          },
+          function(error){
+            console.log('error', error);
+          }
+        );
+      }else{
+        console.log('sorry your browser does not support this')
+      }
+
     }
 
     function reportStatus(){
