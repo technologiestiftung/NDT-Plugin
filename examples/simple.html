@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title></title>
+    <script type="text/javascript" src="../lib/min/NDTPlugin-min.js"></script>
+</head>
+<body>
+  <table>
+    <tr><th>Status</th><td id="status"></td></tr>
+    <tr><th>Error</th><td id="error"></td></tr>
+    <tr><th>Up</th><td id="up"></td></tr>
+    <tr><th>Down</th><td id="down"></td></tr>
+    <tr><th>Round-Trip</th><td id="round"></td></tr>
+    <tr><th>Jitter</th><td id="jitter"></td></tr>
+    <tr><th>Limit</th><td id="limit"></td></tr>
+    <tr><th>Loss</th><td id="loss"></td></tr>
+  </table>
+  <script type="text/javascript">
+
+    var ndt = new NDTPlugin('../lib/min');
+
+    var interval;
+
+    if(ndt.check()){
+      ndt.getServer(
+        function(success){
+          ndt.setServer(success);
+          ndt.run();
+          interval = setInterval(reportStatus, 1000);
+        },
+        function(error){
+          console.log('error', error);
+        }
+      );
+    }else{
+      console.log('sorry your browser does not support this')
+    }
+
+    function reportStatus(){
+      var status = ndt.getStatus();
+      
+      for(var key in status){
+        document.getElementById(key).innerHTML = status[key];
+      }
+
+      if(status.error.match(/completed/)){
+        clearInterval(interval);
+      }
+    }
+
+  </script>
+</body>
+</html>
+
