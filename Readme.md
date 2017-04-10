@@ -170,8 +170,10 @@ function reportStatus(){
 
 The example can be found in the examples folder. Two live examples can be found here:
 
+![Simple Example](https://github.com/technologiestiftung/NDT-Plugin/raw/master/examples/thumbnail_simple.png)
 http://technologiestiftung.github.io/NDT-Plugin/examples/simple.html
 
+![D3 Example](https://github.com/technologiestiftung/NDT-Plugin/raw/master/examples/thumbnail_d3.png)
 http://technologiestiftung.github.io/NDT-Plugin/examples/d3.html
 
 ## COPYRIGHT
