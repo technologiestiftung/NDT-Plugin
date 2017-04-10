@@ -178,3 +178,4 @@ http://technologiestiftung.github.io/NDT-Plugin/examples/d3.html
 
 Please note, that the original NDT software, which is bundled into ndt-browser-client-min.js and ndt-wrapper-ww-min.js is supplied under the license of the original creators, which can be found in the folder lib/ndt-project_ndt_HTML5-frontend/COPYRIGHT.
 
+The Plugin itself is provided under the open source license GPLv3.
