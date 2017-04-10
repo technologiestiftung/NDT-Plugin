@@ -8,6 +8,7 @@ The Network Diagnostic Tool is an open source web-based tool, which allows you t
 The stored information is used to inform about speed issues and the distribution of high-speed internet connections. An example for an application making use of this and providing the data for further analysis is the Measurement Lab:
 
 Visualization and Open Data: http://viz.measurementlab.net
+
 Speed Test: https://speed.measurementlab.net
 
 ## USAGE
@@ -48,11 +49,6 @@ if(ndt.check()){
 The script talks to https://mlab-ns.appspot.com/ndt_ssl to get the closest server.
 
 ```
-//For convenience we have bundled all status data into one json object
-
-
-
-
 ndt.getServer(
   function(server){
     //next step
@@ -69,6 +65,7 @@ Using the server from the previous step, we can now start the test
 ```
 //set server (you could also manually provide a server)
 ndt.setServer(server);
+//start test
 ndt.run();
 ```
 
@@ -173,8 +170,9 @@ function reportStatus(){
 
 The example can be found in the examples folder. Two live examples can be found here:
 
-technologiestiftung.github.io/NDT-Plugin/examples/simple.html
-technologiestiftung.github.io/NDT-Plugin/examples/d3.html
+http://technologiestiftung.github.io/NDT-Plugin/examples/simple.html
+
+http://technologiestiftung.github.io/NDT-Plugin/examples/d3.html
 
 ## COPYRIGHT
 

@@ -10,10 +10,13 @@
 
 <h2 id="introduction">INTRODUCTION</h2>
 
-<p>The Network Diagnostic Tool is an open source web-based tool, which allows you to measure the current speed of you internet connection. It therefore connects to the closest server running the NDT-Software and measures up- and download speed. <strong>Important note:</strong> The performance is not only provided to the client, but also stored on the remote server for statistical purposes. Due to this fact it is important to include a disclaimer on the page, warning the user about the storage of &#8216;personal&#8217; information on the server-side.
-The stored information is used to inform about speed issues and the distribution of high-speed internet connections. An example for an application making use of this and providing the data for further analysis is the Measurement Lab:
-Visualization and Open Data: http://viz.measurementlab.net
-Speed Test: https://speed.measurementlab.net</p>
+<p>The Network Diagnostic Tool is an open source web-based tool, which allows you to measure the current speed of you internet connection. It therefore connects to the closest server running the NDT-Software and measures up- and download speed. <strong>Important note:</strong> The performance is not only provided to the client, but also stored on the remote server for statistical purposes. Due to this fact, it is important to include a disclaimer on the page, warning the user about the storage of &#8216;personal&#8217; information on the server-side.</p>
+
+<p>The stored information is used to inform about speed issues and the distribution of high-speed internet connections. An example for an application making use of this and providing the data for further analysis is the Measurement Lab:</p>
+
+<p>Visualization and Open Data: http://viz.measurementlab.net</p>
+
+<p>Speed Test: https://speed.measurementlab.net</p>
 
 <h2 id="usage">USAGE</h2>
 
@@ -53,12 +56,7 @@ Speed Test: https://speed.measurementlab.net</p>
 
 <p>The script talks to https://mlab-ns.appspot.com/ndt_ssl to get the closest server.</p>
 
-<pre><code>//For convenience we have bundled all status data into one json object
-
-
-
-
-ndt.getServer(
+<pre><code>ndt.getServer(
   function(server){
     //next step
   },
@@ -74,6 +72,7 @@ ndt.getServer(
 
 <pre><code>//set server (you could also manually provide a server)
 ndt.setServer(server);
+//start test
 ndt.run();
 </code></pre>
 
@@ -179,8 +178,9 @@ function reportStatus(){
 
 <p>The example can be found in the examples folder. Two live examples can be found here:</p>
 
-<p>technologiestiftung.github.io/NDT-Plugin/examples/simple.html
-technologiestiftung.github.io/NDT-Plugin/examples/d3.html</p>
+<p>http://technologiestiftung.github.io/NDT-Plugin/examples/simple.html</p>
+
+<p>http://technologiestiftung.github.io/NDT-Plugin/examples/d3.html</p>
 
 <h2 id="copyright">COPYRIGHT</h2>
 
