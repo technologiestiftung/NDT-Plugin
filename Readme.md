@@ -3,8 +3,10 @@
 
 ## INTRODUCTION
 
-The Network Diagnostic Tool is an open source web-based tool, which allows you to measure the current speed of you internet connection. It therefore connects to the closest server running the NDT-Software and measures up- and download speed. **Important note:** The performance is not only provided to the client, but also stored on the remote server for statistical purposes. Due to this fact it is important to include a disclaimer on the page, warning the user about the storage of 'personal' information on the server-side.
+The Network Diagnostic Tool is an open source web-based tool, which allows you to measure the current speed of you internet connection. It therefore connects to the closest server running the NDT-Software and measures up- and download speed. **Important note:** The performance is not only provided to the client, but also stored on the remote server for statistical purposes. Due to this fact, it is important to include a disclaimer on the page, warning the user about the storage of 'personal' information on the server-side.
+
 The stored information is used to inform about speed issues and the distribution of high-speed internet connections. An example for an application making use of this and providing the data for further analysis is the Measurement Lab:
+
 Visualization and Open Data: http://viz.measurementlab.net
 Speed Test: https://speed.measurementlab.net
 
